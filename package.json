@@ -8,7 +8,7 @@
     "start": "webpack serve --config ./webpack.dev.js",
     "test": "jest --coverage",
     "lint": "eslint . --ext .ts",
-    "prettier-format": "prettier --config .prettierrc src/**/*.ts --write"
+    "prettier-format": "prettier --config .prettierrc \"src/**/*.ts\" --write"
   },
   "husky": {
     "hooks": {
