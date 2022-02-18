@@ -12,8 +12,16 @@ export default class Vec2D {
         return this._vector2D;
     }
 
+    public set x(value) {
+        this._vector2D[0] = value;
+    }
+
     public get x() {
         return this._vector2D[0];
+    }
+
+    public set y(value) {
+        this._vector2D[1] = value;
     }
 
     public get y() {
@@ -24,8 +32,8 @@ export default class Vec2D {
         return `vec2(${this.x}, ${this.y})`;
     }
 
-    public clone(vec2D: Vec2D) : Vec2D {
-        let out = new Vec2D(vec2D.x, vec2D.y);
+    public clone() : Vec2D {
+        let out = new Vec2D(this.x, this.y);
         return out;
     }
 }
