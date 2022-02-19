@@ -6,6 +6,13 @@
     "target": "es5",
     "outDir": "build"
   },
+  "typedocOptions": {
+    "entryPoints": [
+      "src/index.ts"
+    ],
+    "out": "docs",
+    "includes": "src"
+  },
   "include": [
     "src/**/*.ts"
   ],
