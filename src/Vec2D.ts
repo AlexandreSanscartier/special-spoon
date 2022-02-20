@@ -3,8 +3,9 @@ import IVec2D from './interfaces/IVec2D';
 export default class Vec2D implements IVec2D {
   private _vector2D: Float32Array;
   private _magnitude: number;
+  private _length: number;
 
-  private _mustRecalculateMagnitude = true;
+  private _vectorHasChanged = true;
 
   /**
    * Creates an instance of a two dimenstional vector.
@@ -13,8 +14,8 @@ export default class Vec2D implements IVec2D {
    */
   public constructor(x: number, y: number) {
     this._vector2D = new Float32Array(2);
-    this._vector2D[0] = x;
-    this._vector2D[1] = y;
+    this.x = x;
+    this.y = y;
   }
 
   /**
@@ -32,13 +33,22 @@ export default class Vec2D implements IVec2D {
   }
 
   /**
+   * Gets the length of the vector (same as magnitude).
+   */
+  public get length() {
+    return this.magnitude();
+  }
+
+  /**
    * Sets the x value.
    */
   public set x(value) {
+    if (isNaN(value) || value === null)
+      throw new Error(`InvalidArgument for value: ${value}`);
     const isSame = value === this.x;
     this._vector2D[0] = value;
     if (!isSame) {
-      this._mustRecalculateMagnitude = true;
+      this._vectorHasChanged = true;
     }
   }
 
@@ -53,10 +63,12 @@ export default class Vec2D implements IVec2D {
    * Sets the y value.
    */
   public set y(value) {
+    if (isNaN(value) || value === null)
+      throw new Error(`InvalidArgument for value: ${value}`);
     const isSame = value === this.y;
     this._vector2D[1] = value;
     if (!isSame) {
-      this._mustRecalculateMagnitude = true;
+      this._vectorHasChanged = true;
     }
   }
 
@@ -68,22 +80,49 @@ export default class Vec2D implements IVec2D {
   }
 
   /**
-   * Scales the 2D vector by the scale s
-   * @param s the scale to use.
-   * @returns a new Vec2D scaled by amount s.
+   * Adds the current vector with the supplied vector.
+   * @param vec the vector to add.
    */
-  public scale(s: number): IVec2D {
-    return new Vec2D(this.x * s, this.y * 2);
+  public add(vec: IVec2D) {
+    this.x += vec.x;
+    this.y += vec.y;
   }
 
   /**
-   * Scales in place the 2D vector by the scale s
+   * Subtracts the current vector with the supplied vector.
+   * @param vec the vector to add.
+   */
+  public subtract(vec: IVec2D) {
+    this.x -= vec.x;
+    this.y -= vec.y;
+  }
+
+  /**
+   * Calculates the dot product with the supplied array.
+   * @param vec the to multiply with.
+   * @returns the dot product.
+   */
+  public dot(vec: IVec2D) {
+    return this.x * vec.x + this.y * vec.y;
+  }
+
+  /**
+   * Scales the 2D vector by the scale s
    * @param s the scale to use.
    */
-  public scaleInPlace(s: number) {
-    this.x = this.x * s;
-    this.y = this.y * s;
-    this._mustRecalculateMagnitude = true;
+  public scale(s: number) {
+    this.x *= s;
+    this.y *= s;
+  }
+
+  /**
+   * Calculates the euclidean distance between two vectors
+   * @param vec the vector to calculate the distance from.
+   */
+  public distance(vec: IVec2D): number {
+    const x = this.x - vec.x;
+    const y = this.y - vec.y;
+    return Math.sqrt(x * x + y * y);
   }
 
   /**
@@ -91,9 +130,9 @@ export default class Vec2D implements IVec2D {
    * @returns the magnitude of the vector.
    */
   public magnitude(): number {
-    if (this._mustRecalculateMagnitude) {
+    if (this._vectorHasChanged) {
       this._magnitude = Math.sqrt(this.x * this.x + this.y * this.y);
-      this._mustRecalculateMagnitude = false;
+      this._vectorHasChanged = false;
     }
     return this._magnitude;
   }
@@ -118,7 +157,7 @@ export default class Vec2D implements IVec2D {
    * @returns the string representation
    */
   public toString(): string {
-    return `vec2(${this.x}, ${this.y})`;
+    return `vec2D(${this.x}, ${this.y})`;
   }
 
   /**

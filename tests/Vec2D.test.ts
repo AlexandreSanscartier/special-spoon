@@ -12,6 +12,45 @@ describe('Vec2D class', () => {
     jest.clearAllMocks();
   });
 
+  it('should throw an InvalidArgumentError when constructing a Vec2D with values of undefined', () => {
+    // Assert
+    expect(() => {
+      new Vec2D(undefined, undefined);
+    }).toThrowError();
+  });
+
+  it('should throw an InvalidArgumentError when setting the value of x to undefined', () => {
+    // Assert
+    expect(() => {
+      testVec2D.x = undefined;
+    }).toThrowError();
+  });
+
+  it('should throw an InvalidArgumentError when setting the value of x to NaN', () => {
+    // Assert
+    expect(() => {
+      testVec2D.x = NaN;
+    }).toThrowError();
+  });
+
+  it('should throw an InvalidArgumentError when setting the value of x to null', () => {
+    // Assert
+    expect(() => {
+      testVec2D.x = null;
+    }).toThrowError();
+  });
+
+  it('should properly set the value of x when it is valid', () => {
+    // Arrange
+    const expected = 1337;
+
+    // Act
+    testVec2D.x = expected;
+
+    // Assert
+    expect(testVec2D.x).toBe(expected);
+  });
+
   it('should return the 10 as the value for x of the Vec2D(10, 22)', () => {
     // Arrange
     const expected = 10;
@@ -19,6 +58,38 @@ describe('Vec2D class', () => {
 
     // Assert
     expect(actual).toBe(expected);
+  });
+
+  it('should throw an InvalidArgumentError when setting the value of y to undefined', () => {
+    // Assert
+    expect(() => {
+      testVec2D.y = undefined;
+    }).toThrowError();
+  });
+
+  it('should throw an InvalidArgumentError when setting the value of y to NaN', () => {
+    // Assert
+    expect(() => {
+      testVec2D.y = NaN;
+    }).toThrowError();
+  });
+
+  it('should throw an InvalidArgumentError when setting the value of y to null', () => {
+    // Assert
+    expect(() => {
+      testVec2D.y = null;
+    }).toThrowError();
+  });
+
+  it('should properly set the value of y when it is valid', () => {
+    // Arrange
+    const expected = 1337;
+
+    // Act
+    testVec2D.y = expected;
+
+    // Assert
+    expect(testVec2D.y).toBe(expected);
   });
 
   it('should return the 22 as the value for y of the Vec2D(10, 22)', () => {
@@ -32,7 +103,7 @@ describe('Vec2D class', () => {
 
   it('should return Vec2(10, 22) as the value for toString() of the Vec2D(10, 22)', () => {
     // Arrange
-    const expected = 'vec2(10, 22)';
+    const expected = 'vec2D(10, 22)';
     const actual = testVec2D.toString();
 
     // Assert
@@ -53,27 +124,12 @@ describe('Vec2D class', () => {
   it('should return a new Vec2D with x:20 and y:44 scaled by a factor of 2 Vec2D(10, 22).scale(2)', () => {
     // Arrange
     const expected = new Vec2D(20, 44);
-    const expectedOriginal = new Vec2D(10, 22);
 
     // Act
-    const actual = testVec2D.scale(2);
+    testVec2D.scale(2);
 
     // Assert
-    expect(actual).toStrictEqual(expected);
-    expect(testVec2D).toStrictEqual(expectedOriginal);
-  });
-
-  it('should scale in place the Vec2D with x:20 and y:44 scaled by a factor of 2 Vec2D(10, 22).scaleInPlace(2)', () => {
-    // Arrange
-    const expectedX = 20;
-    const expectedY = 44;
-
-    // Act
-    testVec2D.scaleInPlace(2);
-
-    // Assert
-    expect(testVec2D.x).toBe(expectedX);
-    expect(testVec2D.y).toBe(expectedY);
+    expect(testVec2D).toStrictEqual(expected);
   });
 
   it('should return the magnitude of Vec2D with x:10 and y:22 of 24.1660919472 Vec2D(10, 22).magnitude()', () => {
@@ -98,7 +154,7 @@ describe('Vec2D class', () => {
     expect(sqrtSpy).toBeCalledTimes(1);
   });
 
-  it('should calculate the magnitude only one the first call to Vec2D(10, 22).magnitude()', () => {
+  it('should calculate the magnitude only on the first call to Vec2D(10, 22).magnitude()', () => {
     // Arrange
     const sqrtSpy = jest.spyOn(global.Math, 'sqrt');
 
@@ -106,6 +162,28 @@ describe('Vec2D class', () => {
     for (let i = 0; i < 10; i++) {
       testVec2D.magnitude();
     }
+
+    // Assert
+    expect(sqrtSpy).toBeCalledTimes(1);
+  });
+
+  it('should get the length of the Vec2D(10, 22).magnitude()', () => {
+    // Arrange
+    const expected = testMagnitude;
+
+    // Act
+    const actual = testVec2D.length;
+
+    // Assert
+    expect(actual).toBe(expected);
+  });
+
+  it('should calculate the magnitude when calling get length of the Vec2D(10, 22)', () => {
+    // Arrange
+    const sqrtSpy = jest.spyOn(global.Math, 'sqrt');
+
+    // Act
+    testVec2D.length;
 
     // Assert
     expect(sqrtSpy).toBeCalledTimes(1);
@@ -150,6 +228,30 @@ describe('Vec2D class', () => {
     expect(sqrtSpy).toBeCalledTimes(2);
   });
 
+  it('should properly add the Vec2D(5, 10) to the Vec2D(10,22)', () => {
+    // Arrange
+    const expected = new Float32Array([15, 32]);
+    const vectorToAdd = new Vec2D(5, 10);
+
+    // Act
+    testVec2D.add(vectorToAdd);
+
+    // Assert
+    expect(testVec2D.vector).toStrictEqual(expected);
+  });
+
+  it('should properly subtract the Vec2D(5, 10) from the Vec2D(10,22)', () => {
+    // Arrange
+    const expected = new Float32Array([5, 12]);
+    const vectorToSubtract = new Vec2D(5, 10);
+
+    // Act
+    testVec2D.subtract(vectorToSubtract);
+
+    // Assert
+    expect(testVec2D.vector).toStrictEqual(expected);
+  });
+
   it('should not recalculate the magnitude when the previous y is equal to the new y after a change in y', () => {
     // Arrange
     const sqrtSpy = jest.spyOn(global.Math, 'sqrt');
@@ -161,6 +263,30 @@ describe('Vec2D class', () => {
 
     // Assert
     expect(sqrtSpy).toBeCalledTimes(1);
+  });
+
+  it('should caculate the dot product of Vec2D(5,10) and Vec2D(10,22)', () => {
+    // Arrange
+    const vectorToDotProduct = new Vec2D(5, 10);
+    const expected = 270;
+
+    // Act
+    const actual = testVec2D.dot(vectorToDotProduct);
+
+    // Assert
+    expect(actual).toBe(expected);
+  });
+
+  it('should calculate the distance between Vec2D(5,10) and Vec2D(10,22)', () => {
+    // Arrange
+    const vectorToCalculateDistanceTo = new Vec2D(5, 10);
+    const expected = 13;
+
+    // Act
+    const actual = testVec2D.distance(vectorToCalculateDistanceTo);
+
+    // Assert
+    expect(actual).toBe(expected);
   });
 
   it('should normalize the Vec2D with x:10 and y:22 to X:0.41380295157432556 Y:0.9103664755821228 Vec2D(10,22).normalize()', () => {

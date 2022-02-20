@@ -2,14 +2,17 @@
     "root": true,
     "parser": "@typescript-eslint/parser",
     "plugins": [
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "jest"
     ],
     "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended"
+        "plugin:@typescript-eslint/recommended",
+        "plugin:jest/recommended"
     ],
-    "rules": { 
-        "no-console": 2
+    "rules": {
+        "no-console": 2,
+        "jest/prefer-strict-equal": 2
     }
 }

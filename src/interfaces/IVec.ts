@@ -10,17 +10,40 @@ export default interface IVec {
   get vector(): Float32Array;
 
   /**
-   * Scales the 2D vector by the scale s
-   * @param s the scale to use.
-   * @returns a new Vec2D scaled by amount s.
+   * Gets the length of the vector (same as magnitude).
    */
-  scale(s: number): IVec;
+  get length(): number;
 
   /**
-   * Scales in place the 2D vector by the scale s
+   * Adds the current vector with the supplied vector.
+   * @param vec the vector to add.
+   */
+  add(vec: IVec);
+
+  /**
+   * Subtracts the current vector with the supplied vector.
+   * @param vec the vector to add.
+   */
+  subtract(vec: IVec);
+
+  /**
+   * Calculates the dot product with the supplied array.
+   * @param vec the to multiply with.
+   * @returns the dot product.
+   */
+  dot(vec: IVec): number;
+
+  /**
+   * Scales the 2D vector by the scale s
    * @param s the scale to use.
    */
-  scaleInPlace(s: number): void;
+  scale(s: number);
+
+  /**
+   * Calculates the euclidean distance between two vectors
+   * @param vec the vector to calculate the distance from.
+   */
+  distance(vec: IVec): number;
 
   /**
    * Calculates the magnitude of the 2D vector.
