@@ -7,12 +7,19 @@ export default interface IVec {
   /**
    * Gets the values of the vector.
    */
-  get vector(): Float32Array;
+  get value(): Float32Array;
 
   /**
    * Gets the length of the vector (same as magnitude).
    */
   get length(): number;
+
+  /**
+   * Sets the specific index to the specified value.
+   * @param index the index to set the value at.
+   * @param value the value to set at the index.
+   */
+  set(index: number, value: number);
 
   /**
    * Adds the current vector with the supplied vector.
@@ -34,7 +41,7 @@ export default interface IVec {
   dot(vec: IVec): number;
 
   /**
-   * Scales the 2D vector by the scale s
+   * Scales the vector by the scale s
    * @param s the scale to use.
    */
   scale(s: number);
@@ -46,26 +53,26 @@ export default interface IVec {
   distance(vec: IVec): number;
 
   /**
-   * Calculates the magnitude of the 2D vector.
+   * Calculates the magnitude of the vector.
    * @returns the magnitude of the vector.
    */
   magnitude(): number;
 
   /**
-   * Normalizes the 2D Vector
-   * @returns the normalized vector or the zero vector (0,0).
+   * Normalizes the Vector (aka: unit vector).
+   * @returns the normalized vector or the zero vector.
    */
   normalize(): IVec;
 
   /**
-   * Gets a string representation of the vector (ex. vec2(1, 2))
+   * Gets a string representation of the vector.
    * @returns the string representation
    */
   toString(): string;
 
   /**
-   * Clones the 2D vector.
-   * @returns the cloned 2d vector.
+   * Clones the vector.
+   * @returns the cloned vector.
    */
   clone(): IVec;
 }

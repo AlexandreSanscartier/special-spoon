@@ -10,4 +10,6 @@ export default interface IVec3D extends IVec2D {
    * Gets the z value.
    */
   get z(): number;
+
+  cross(vec: IVec3D): IVec3D;
 }

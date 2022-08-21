@@ -12,32 +12,26 @@ describe('Vec2D class', () => {
     jest.clearAllMocks();
   });
 
-  it('should throw an InvalidArgumentError when constructing a Vec2D with values of undefined', () => {
+  it('should set the x value using the set', () => {
+    // Arrange
+    const expected = 7;
+
+    // Act
+    testVec2D.set(0, expected);
+
     // Assert
-    expect(() => {
-      new Vec2D(undefined, undefined);
-    }).toThrowError();
+    expect(testVec2D.x).toBe(expected);
   });
 
-  it('should throw an InvalidArgumentError when setting the value of x to undefined', () => {
-    // Assert
-    expect(() => {
-      testVec2D.x = undefined;
-    }).toThrowError();
-  });
+  it('should set the y value using the set', () => {
+    // Arrange
+    const expected = 7;
 
-  it('should throw an InvalidArgumentError when setting the value of x to NaN', () => {
-    // Assert
-    expect(() => {
-      testVec2D.x = NaN;
-    }).toThrowError();
-  });
+    // Act
+    testVec2D.set(1, expected);
 
-  it('should throw an InvalidArgumentError when setting the value of x to null', () => {
     // Assert
-    expect(() => {
-      testVec2D.x = null;
-    }).toThrowError();
+    expect(testVec2D.y).toBe(expected);
   });
 
   it('should properly set the value of x when it is valid', () => {
@@ -58,27 +52,6 @@ describe('Vec2D class', () => {
 
     // Assert
     expect(actual).toBe(expected);
-  });
-
-  it('should throw an InvalidArgumentError when setting the value of y to undefined', () => {
-    // Assert
-    expect(() => {
-      testVec2D.y = undefined;
-    }).toThrowError();
-  });
-
-  it('should throw an InvalidArgumentError when setting the value of y to NaN', () => {
-    // Assert
-    expect(() => {
-      testVec2D.y = NaN;
-    }).toThrowError();
-  });
-
-  it('should throw an InvalidArgumentError when setting the value of y to null', () => {
-    // Assert
-    expect(() => {
-      testVec2D.y = null;
-    }).toThrowError();
   });
 
   it('should properly set the value of y when it is valid', () => {
@@ -237,7 +210,7 @@ describe('Vec2D class', () => {
     testVec2D.add(vectorToAdd);
 
     // Assert
-    expect(testVec2D.vector).toStrictEqual(expected);
+    expect(testVec2D.value).toStrictEqual(expected);
   });
 
   it('should properly subtract the Vec2D(5, 10) from the Vec2D(10,22)', () => {
@@ -249,7 +222,7 @@ describe('Vec2D class', () => {
     testVec2D.subtract(vectorToSubtract);
 
     // Assert
-    expect(testVec2D.vector).toStrictEqual(expected);
+    expect(testVec2D.value).toStrictEqual(expected);
   });
 
   it('should not recalculate the magnitude when the previous y is equal to the new y after a change in y', () => {
@@ -349,7 +322,7 @@ describe('Vec2D class', () => {
     const expected = new Float32Array([10, 22]);
 
     // Act
-    const actual = testVec2D.vector;
+    const actual = testVec2D.value;
 
     // Assert
     expect(actual).toStrictEqual(expected);

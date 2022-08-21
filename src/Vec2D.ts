@@ -3,8 +3,6 @@ import IVec2D from './interfaces/IVec2D';
 export default class Vec2D implements IVec2D {
   private _vector2D: Float32Array;
   private _magnitude: number;
-  private _length: number;
-
   private _vectorHasChanged = true;
 
   /**
@@ -28,7 +26,7 @@ export default class Vec2D implements IVec2D {
   /**
    * Gets the values of the vector.
    */
-  public get vector() {
+  public get value() {
     return this._vector2D;
   }
 
@@ -43,8 +41,6 @@ export default class Vec2D implements IVec2D {
    * Sets the x value.
    */
   public set x(value) {
-    if (isNaN(value) || value === null)
-      throw new Error(`InvalidArgument for value: ${value}`);
     const isSame = value === this.x;
     this._vector2D[0] = value;
     if (!isSame) {
@@ -63,8 +59,6 @@ export default class Vec2D implements IVec2D {
    * Sets the y value.
    */
   public set y(value) {
-    if (isNaN(value) || value === null)
-      throw new Error(`InvalidArgument for value: ${value}`);
     const isSame = value === this.y;
     this._vector2D[1] = value;
     if (!isSame) {
@@ -77,6 +71,19 @@ export default class Vec2D implements IVec2D {
    */
   public get y() {
     return this._vector2D[1];
+  }
+
+  /**
+   * Sets the specific index to the specified value.
+   * @param index the index to set the value at.
+   * @param value the value to set at the index.
+   */
+  public set(index: number, value: number) {
+    if (index === 0) {
+      this.x = value;
+    } else if (index === 1) {
+      this.y = value;
+    }
   }
 
   /**
@@ -153,7 +160,7 @@ export default class Vec2D implements IVec2D {
   }
 
   /**
-   * Gets a string representation of the vector (ex. vec2(1, 2))
+   * Gets a string representation of the vector (ex. vec2D(1, 2))
    * @returns the string representation
    */
   public toString(): string {
