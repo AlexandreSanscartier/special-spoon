@@ -2,7 +2,7 @@
 
 Welcome! :wave:
 
-Recently I purchased a copy of [Foundations of Game Engine Development](https://www.amazon.ca/gp/product/0985811749/ref=as_li_tl?ie=UTF8&tag=1337040d-20&camp=15121&creative=330641&linkCode=as2&creativeASIN=0985811749&linkId=a011b1ff707e947a2cb63d87a3777723) to dive deeper into the fundamentals of game engine development, and the best way to learn is to do, so this is what this repository is all about!
+Recently I purchased a copy of Foundations of Game Engine Development to dive deeper into the fundamentals of game engine development, and the best way to learn is to do, so this is what this repository is all about!
 
 The library will hopefully grow with time to accomodate all functions necessary for vector & matrix mathematics.
 
